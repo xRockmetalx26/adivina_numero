@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:adivina_numero/src/core/app/flutter_cout.dart';
 import 'package:adivina_numero/src/features/home/presentation/pages/home_page.dart';
 import 'package:adivina_numero/src/shared/app_colors.dart';
+import 'package:adivina_numero/src/shared/constant.dart';
 import 'package:adivina_numero/src/shared/widgets/fade_transition_v2.dart';
 
 final class SplashPage extends StatefulWidget {
@@ -49,12 +50,8 @@ final class _SplashPageState extends State<SplashPage> {
           children: [
             Text(
               'Test de adivina el número',
-              style: TextStyle(
-                fontSize: 25,
-                color: Colors.white,
-              ),
+              style: k25Style.copyWith(color: Colors.white),
             ),
-            // fade en la imagen del splash
             FadeTwenV2(
               duration: const Duration(seconds: 2),
               child: Image.asset('assets/images/icon.png'),
