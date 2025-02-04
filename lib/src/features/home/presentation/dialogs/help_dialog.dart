@@ -7,6 +7,7 @@ import 'package:adivina_numero/src/shared/constant.dart';
 import 'package:adivina_numero/src/shared/widgets/spaces.dart';
 
 final class HelpDialog extends StatefulWidget {
+  /// Muestra el cuadro de diálogo de ayuda.
   const HelpDialog({super.key});
 
   Future<bool?> show(BuildContext context) => showDialog(
@@ -49,7 +50,7 @@ Extremo: 1-1000''';
               style: kBigStyle,
             ),
             Spaces.height16,
-            // cerrar
+            // aceptar y cerrar
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,

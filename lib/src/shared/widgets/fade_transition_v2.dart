@@ -1,6 +1,10 @@
 // Flutter imports:
 import 'package:flutter/widgets.dart';
 
+/// Realiza un efecto `FadeTwen` en un `Widget` segun su `Duration`.
+/// - [repeat] si es necesario repetir el efecto en caso de build,
+/// - [duration] duración del efecto,
+/// - [child] widget al cual se le aplicar el efecto.
 final class FadeTwenV2 extends StatefulWidget {
   const FadeTwenV2({
     super.key,
@@ -13,6 +17,8 @@ final class FadeTwenV2 extends StatefulWidget {
   final bool repeat;
   final Duration duration;
 
+  /// Lo mismo que `FadeTwenV2()`, pero con:
+  /// - [repeat] = `false`
   const FadeTwenV2.repeat({
     super.key,
     required this.child,

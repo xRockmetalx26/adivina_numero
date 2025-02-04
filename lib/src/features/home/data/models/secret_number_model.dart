@@ -1,10 +1,13 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:adivina_numero/src/features/home/data/enums/number_color.dart';
 
 // Package imports:
 import 'package:equatable/equatable.dart';
 
 final class SecretNumberModel extends Equatable {
+  /// Modelo de número secreto.
+  /// - [number] número secreto.
+  /// - [color] color del número secreto.
   const SecretNumberModel(
     this.number,
     this.color,
@@ -15,19 +18,9 @@ final class SecretNumberModel extends Equatable {
 
   String get renderText => number.toString();
 
-  Color get renderColor => switch (color) {
-        NumberColor.red => Colors.red,
-        NumberColor.green => Colors.green,
-      };
-
   @override
   List<Object?> get props => [
         number,
         color,
       ];
-}
-
-enum NumberColor {
-  red,
-  green,
 }

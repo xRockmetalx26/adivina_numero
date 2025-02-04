@@ -1,6 +1,7 @@
 // Dart imports:
 import 'dart:ui';
 
+/// Colores del App.
 final class AppColors {
   const AppColors._();
 

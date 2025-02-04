@@ -22,6 +22,7 @@ final class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // asignamos el provider del home con .value, puesto que es un L value
         ChangeNotifierProvider.value(value: gi<HomeProvider>()),
       ],
       child: MaterialApp(

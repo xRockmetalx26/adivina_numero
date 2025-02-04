@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:adivina_numero/src/features/home/data/enums/difficult.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -64,6 +65,7 @@ final class _HomePageState extends State<HomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    // textfield de numero
                     Expanded(
                       flex: 2,
                       child: Selector<HomeProvider, int>(
@@ -146,6 +148,7 @@ final class _HomePageState extends State<HomePage> {
                         difficult.renderText,
                         style: kBigStyle,
                       ),
+                      // selector de dificultad
                       SliderTheme(
                         data: SliderThemeData(
                           allowedInteraction: SliderInteraction.slideOnly,
@@ -166,6 +169,7 @@ final class _HomePageState extends State<HomePage> {
                             final difficult = Difficult.values.firstWhere(
                               (difficult) => difficult.index == value.toInt(),
                             );
+
                             _provider.changeDifficult(difficult);
                           },
                         ),
@@ -181,9 +185,11 @@ final class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _onTry(String value) {
+  /// Cuando se presiona el check del teclado.
+  /// - [value] número a comparar.
+  Future<void> _onTry(String value) async {
     if (value.isEmpty) {
-      HelpDialog().show(context);
+      await HelpDialog().show(context);
       return;
     }
 
@@ -191,11 +197,10 @@ final class _HomePageState extends State<HomePage> {
     final isRepeated =
         _provider.minors.contains(number) || _provider.olders.contains(number);
     if (isRepeated) {
-      NotificationDialog.dissmisible(
+      await NotificationDialog.dissmisible(
         iconData: Icons.info,
         message: 'Seleccione un número distinto de los anteriores',
       ).show(context);
-
       return;
     }
 
@@ -204,6 +209,9 @@ final class _HomePageState extends State<HomePage> {
     _focus.requestFocus();
   }
 
+  /// Valida la entrada en el campo del número.
+  /// - [oldValue] valor previo del `TextField`.
+  /// - [newValue] valor nuevo del `TextField`.
   TextEditingValue _validateInput(
     TextEditingValue oldValue,
     TextEditingValue newValue,

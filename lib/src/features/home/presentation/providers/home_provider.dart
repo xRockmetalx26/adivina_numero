@@ -2,6 +2,8 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:adivina_numero/src/features/home/data/enums/difficult.dart';
+import 'package:adivina_numero/src/features/home/data/enums/number_color.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -19,6 +21,7 @@ final class HomeProvider extends ChangeNotifier {
   late int secretNumber;
   late int tries;
 
+  /// Inicializa el provider cuando se entra a la página de home.
   void initialize() {
     difficult = Difficult.easy;
     secretNumber = random.nextInt(10) + 1;
@@ -29,6 +32,7 @@ final class HomeProvider extends ChangeNotifier {
     historic.clear();
   }
 
+  /// Resetea los valores del provider, de acuerdo a la dificultad.
   void clear() {
     secretNumber = getSecretNumber;
     tries = getTries;
@@ -44,6 +48,7 @@ final class HomeProvider extends ChangeNotifier {
     ]);
   }
 
+  /// Cambia la dificultad.
   void changeDifficult(Difficult difficult) {
     this.difficult = difficult;
 
@@ -51,6 +56,8 @@ final class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Realiza el intento de adivinar el número ingresado.
+  /// - [number] número para comparar con el número secreto.
   void tryNumber(int number) {
     tries--;
 
@@ -76,6 +83,7 @@ final class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Genera un número secreto según la dificultad.
   int get getSecretNumber => switch (difficult) {
         Difficult.easy => random.nextInt(10) + 1,
         Difficult.mid => random.nextInt(20) + 1,
@@ -83,6 +91,7 @@ final class HomeProvider extends ChangeNotifier {
         Difficult.extreme => random.nextInt(1000) + 1,
       };
 
+  /// Obtiene la cantidad de dígitos según la dificultad.
   int get getNumberLength => switch (difficult) {
         Difficult.easy => 2,
         Difficult.mid => 2,
@@ -90,6 +99,7 @@ final class HomeProvider extends ChangeNotifier {
         Difficult.extreme => 4,
       };
 
+  /// Obtiene el número de intentos según la dificultad.
   int get getTries => switch (difficult) {
         Difficult.easy => 5,
         Difficult.mid => 8,
@@ -97,24 +107,11 @@ final class HomeProvider extends ChangeNotifier {
         Difficult.extreme => 25,
       };
 
+  /// Obtiene el número maximo según la dificultad.
   int get getMax => switch (difficult) {
         Difficult.easy => 10,
         Difficult.mid => 20,
         Difficult.advanced => 100,
         Difficult.extreme => 1000,
-      };
-}
-
-enum Difficult {
-  easy,
-  mid,
-  advanced,
-  extreme;
-
-  String get renderText => switch (this) {
-        easy => 'Fácil',
-        mid => 'Medio',
-        advanced => 'Avanzado',
-        extreme => 'Extremo',
       };
 }

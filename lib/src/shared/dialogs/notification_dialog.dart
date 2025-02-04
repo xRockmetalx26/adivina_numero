@@ -7,33 +7,26 @@ import 'package:adivina_numero/src/shared/constant.dart';
 import 'package:adivina_numero/src/shared/widgets/spaces.dart';
 
 final class NotificationDialog extends StatefulWidget {
+  /// Diálogo para mostrar notificaciones, con un botón de aceptar.
+  /// - [iconData] icono para renderizar en el diálogo.
+  /// - [message] mensaje a renderizar.
+  /// - [onPressed] función a realizar al aceptar.
+  /// - [child] widget hijo para renderizar.
+  /// - [primaryColor] color primario del diálogo.
+  /// - [autoPop] si es requerido cerrar el diálogo al presionar aceptar.
+  /// - [canPop] si es requerido cerrar el diálogo al presionar el `Pop`.
+  /// - [dismissible] si es requerido cerrar el diálogo al presionar fuera.
   const NotificationDialog({
     super.key,
     required this.iconData,
     this.message,
-    this.onPressed,
     this.child,
+    this.onPressed,
     this.primaryColor = AppColors.primary,
     this.autoPop = false,
     this.canPop = false,
     this.dismissible = false,
   }) : assert(
-          (message == null && child is Widget) ||
-              (message is String && child == null),
-          'You can only use the message or child parameter, not both.',
-        );
-
-  const NotificationDialog.dissmisible({
-    super.key,
-    required this.iconData,
-    this.message,
-    this.onPressed,
-    this.child,
-    this.primaryColor = AppColors.primary,
-  })  : autoPop = true,
-        canPop = true,
-        dismissible = true,
-        assert(
           (message == null && child is Widget) ||
               (message is String && child == null),
           'You can only use the message or child parameter, not both.',
@@ -47,6 +40,26 @@ final class NotificationDialog extends StatefulWidget {
   final bool autoPop;
   final bool canPop;
   final bool dismissible;
+
+  /// Lo mismo que `NotificationDialog()` pero con:
+  /// - [autoPop] = true.
+  /// - [canPop] = true.
+  /// - [dismissible] = true.
+  const NotificationDialog.dissmisible({
+    super.key,
+    required this.iconData,
+    this.message,
+    this.child,
+    this.onPressed,
+    this.primaryColor = AppColors.primary,
+  })  : autoPop = true,
+        canPop = true,
+        dismissible = true,
+        assert(
+          (message == null && child is Widget) ||
+              (message is String && child == null),
+          'You can only use the message or child parameter, not both.',
+        );
 
   Future<bool?> show(BuildContext context) => showDialog(
         context: context,
@@ -86,7 +99,7 @@ final class _NotificationDialogState<T extends Object>
                     )
                   : widget.child!,
               Spaces.height16,
-              // cerrar
+              // aceptar y cerrar
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: widget.primaryColor,

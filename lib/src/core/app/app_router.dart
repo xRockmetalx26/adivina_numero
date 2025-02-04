@@ -8,19 +8,7 @@ import 'package:equatable/equatable.dart';
 // Project imports:
 import 'package:adivina_numero/src/shared/app_colors.dart';
 
-final class AppRoute extends Equatable {
-  const AppRoute({
-    required this.id,
-    required this.builder,
-  });
-
-  final String id;
-  final Widget Function(dynamic args) builder;
-
-  @override
-  List<Object?> get props => [id];
-}
-
+/// Gestiona las rutas del app.
 final class AppRouter {
   AppRouter._();
 
@@ -45,6 +33,8 @@ final class AppRouter {
 
   /// Retorna una `Route` asociada con [id] con los [routeSettings].
   /// si no la encuentra, retornara una `Route` por defecto.
+  /// - [id] id de la ruta.
+  /// - [routeSettings] configuración de la ruta.
   Route matchRoute(
     String id, {
     RouteSettings? routeSettings,
@@ -89,4 +79,20 @@ final class AppRouter {
       ),
     );
   }
+}
+
+final class AppRoute extends Equatable {
+  /// Contiene la información de la ruta del app.
+  /// - [id] id de la ruta.
+  /// - [builder] builder de la Ruta.
+  const AppRoute({
+    required this.id,
+    required this.builder,
+  });
+
+  final String id;
+  final Widget Function(dynamic args) builder;
+
+  @override
+  List<Object?> get props => [id];
 }

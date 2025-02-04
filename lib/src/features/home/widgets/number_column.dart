@@ -5,17 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:adivina_numero/src/shared/constant.dart';
 import 'package:adivina_numero/src/shared/widgets/spaces.dart';
 
+/// Columna de numeros.
+/// - [title] título de la columna.
+/// - [numbers] lista de números a renderizar.
 final class NumberColumn extends StatelessWidget {
   const NumberColumn({
     super.key,
     required this.title,
     required this.numbers,
-    this.applyColors = false,
   });
 
   final String title;
   final List<int> numbers;
-  final bool applyColors;
 
   @override
   Widget build(BuildContext context) {

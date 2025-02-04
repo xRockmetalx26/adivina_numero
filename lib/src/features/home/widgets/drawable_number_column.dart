@@ -7,6 +7,9 @@ import 'package:adivina_numero/src/shared/constant.dart';
 import 'package:adivina_numero/src/shared/widgets/spaces.dart';
 
 final class DrawableNumberColumn extends StatefulWidget {
+  /// Columna de números de color rojo o negro.
+/// - [title] título de la columna.
+/// - [numbers] lista de números a renderizar.
   const DrawableNumberColumn({
     super.key,
     required this.title,
@@ -49,7 +52,7 @@ class _DrawableNumberColumnState extends State<DrawableNumberColumn> {
                 return Text(
                   secretNumber.renderText,
                   textAlign: TextAlign.center,
-                  style: k20Style.copyWith(color: secretNumber.renderColor),
+                  style: k20Style.copyWith(color: secretNumber.color.renderColor),
                 );
               },
             ),
