@@ -41,22 +41,25 @@ final class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        color: AppColors.primary,
-        child: Column(
-          spacing: 20,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Test de adivina el número',
-              style: k25Style.copyWith(color: Colors.white),
-            ),
-            FadeTwenV2(
-              duration: const Duration(seconds: 2),
-              child: Image.asset('assets/images/icon.png'),
-            ),
-          ],
+      body: PopScope(
+        canPop: false,
+        child: Container(
+          width: double.infinity,
+          color: AppColors.primary,
+          child: Column(
+            spacing: 20,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Test de adivina el número',
+                style: k25Style.copyWith(color: Colors.white),
+              ),
+              FadeTwenV2(
+                duration: const Duration(seconds: 2),
+                child: Image.asset('assets/images/icon.png'),
+              ),
+            ],
+          ),
         ),
       ),
     );
