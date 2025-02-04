@@ -18,8 +18,7 @@ final class HelpDialog extends StatefulWidget {
   State<HelpDialog> createState() => _HelpDialogState();
 }
 
-final class _HelpDialogState<T extends Object>
-    extends State<HelpDialog> {
+final class _HelpDialogState<T extends Object> extends State<HelpDialog> {
   static const message = '''Solo se permiten números enteros
 [0-9]
 

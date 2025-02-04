@@ -2,10 +2,10 @@
 import 'dart:math';
 
 // Flutter imports:
-import 'package:adivina_numero/src/core/app/flutter_cout.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
+import 'package:adivina_numero/src/core/app/flutter_cout.dart';
 import 'package:adivina_numero/src/features/home/data/models/secret_number_model.dart';
 
 final class HomeProvider extends ChangeNotifier {
@@ -37,7 +37,11 @@ final class HomeProvider extends ChangeNotifier {
     olders.clear();
     notifyListeners();
 
-    Cout.info([difficult, secretNumber, tries,]);
+    Cout.info([
+      difficult,
+      secretNumber,
+      tries,
+    ]);
   }
 
   void changeDifficult(Difficult difficult) {
