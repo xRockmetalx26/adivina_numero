@@ -56,7 +56,7 @@ final class _SplashPageState extends State<SplashPage> {
               ),
               FadeTwenV2(
                 duration: const Duration(seconds: 2),
-                child: Image.asset('assets/images/icon.png'),
+                child: Image.asset('assets/icons/app_icon.png'),
               ),
             ],
           ),
