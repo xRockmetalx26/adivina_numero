@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
 // Project imports:
 import 'package:adivina_numero/src/core/app/flutter_cout.dart';
 import 'package:adivina_numero/src/di/init_gi.dart';
-import 'package:adivina_numero/src/features/home/data/models/secret_number_model.dart';
 import 'package:adivina_numero/src/features/home/presentation/dialogs/help_dialog.dart';
 import 'package:adivina_numero/src/features/home/presentation/providers/home_provider.dart';
 import 'package:adivina_numero/src/features/home/widgets/drawable_number_column.dart';
@@ -36,7 +35,7 @@ final class HomePage extends StatefulWidget {
 
 final class _HomePageState extends State<HomePage> {
   // providers
-  final _provider = gi<HomeProvider>()..initialize();
+  final _provider = Get.put(gi<HomeProvider>()..initialize());
 
   // controllers
   final _textController = TextEditingController();
@@ -68,35 +67,32 @@ final class _HomePageState extends State<HomePage> {
                     // textfield de numero
                     Expanded(
                       flex: 2,
-                      child: Selector<HomeProvider, int>(
-                        selector: (_, provider) => provider.getNumberLength,
-                        builder: (_, length, __) => TextFormField(
-                          controller: _textController,
-                          focusNode: _focus,
-                          maxLength: _provider.getNumberLength,
-                          keyboardType: TextInputType.number,
-                          textAlign: TextAlign.center,
-                          style: kBigStyle.copyWith(color: Colors.white),
-                          decoration: InputDecoration(
-                            labelText: 'Número',
-                            hintText: '####',
-                            counterText: '',
-                            border: OutlineInputBorder(),
-                          ),
-                          inputFormatters: [
-                            TextInputFormatter.withFunction(_validateInput),
-                          ],
-                          onFieldSubmitted: _onTry,
+                      child: TextFormField(
+                        controller: _textController,
+                        focusNode: _focus,
+                        maxLength: _provider.getNumberLength,
+                        keyboardType: TextInputType.number,
+                        textAlign: TextAlign.center,
+                        style: kBigStyle.copyWith(color: Colors.white),
+                        decoration: InputDecoration(
+                          labelText: 'Número',
+                          hintText: '####',
+                          counterText: '',
+                          border: OutlineInputBorder(),
                         ),
+                        inputFormatters: [
+                          TextInputFormatter.withFunction(_validateInput),
+                        ],
+                        onFieldSubmitted: _onTry,
                       ),
                     ),
                     Expanded(
                       flex: 1,
-                      child: Selector<HomeProvider, int>(
-                        selector: (_, provider) => provider.tries,
-                        builder: (_, tries, __) {
+                      child: GetBuilder<HomeProvider>(
+                        id: 'tries',
+                        builder: (provider) {
                           return Text(
-                            'Intentos\n${tries.toString()}',
+                            'Intentos\n${provider.tries.toString()}',
                             textAlign: TextAlign.center,
                             style: kBigStyle,
                           );
@@ -110,42 +106,42 @@ final class _HomePageState extends State<HomePage> {
                   spacing: 20,
                   children: [
                     Expanded(
-                      child: Selector<HomeProvider, List<int>>(
-                        selector: (_, provider) => provider.olders.toList(),
-                        builder: (_, olders, __) => NumberColumn(
+                      child: GetBuilder<HomeProvider>(
+                        id: 'minors',
+                        builder: (provider) => NumberColumn(
                           title: 'Mayor que',
-                          numbers: olders,
+                          numbers: provider.olders,
                         ),
                       ),
                     ),
                     Expanded(
-                      child: Selector<HomeProvider, List<int>>(
-                        selector: (_, provider) => provider.minors.toList(),
-                        builder: (_, minors, __) => NumberColumn(
+                      child: GetBuilder<HomeProvider>(
+                        id: 'olders',
+                        builder: (provider) => NumberColumn(
                           title: 'Menor que',
-                          numbers: minors,
+                          numbers: provider.minors,
                         ),
                       ),
                     ),
                     Expanded(
-                      child: Selector<HomeProvider, List<SecretNumberModel>>(
-                        selector: (_, provider) => provider.historic.toList(),
-                        builder: (_, historic, __) => DrawableNumberColumn(
+                      child: GetBuilder<HomeProvider>(
+                        id: 'historic',
+                        builder: (provider) => DrawableNumberColumn(
                           title: 'Historial',
-                          numbers: historic,
+                          numbers: provider.historic,
                         ),
                       ),
                     ),
                   ],
                 ),
                 Spaces.height32,
-                Selector<HomeProvider, Difficult>(
-                  selector: (_, provider) => provider.difficult,
-                  builder: (_, difficult, __) => Column(
+                GetBuilder<HomeProvider>(
+                  id: 'selector',
+                  builder: (provider) => Column(
                     spacing: 5,
                     children: [
                       Text(
-                        difficult.renderText,
+                        provider.difficult.renderText,
                         style: kBigStyle,
                       ),
                       // selector de dificultad
@@ -164,7 +160,7 @@ final class _HomePageState extends State<HomePage> {
                           secondaryActiveColor: Colors.white,
                           overlayColor: WidgetStatePropertyAll(Colors.white),
                           divisions: 3,
-                          value: difficult.index.toDouble(),
+                          value: provider.difficult.index.toDouble(),
                           onChanged: (value) {
                             final difficult = Difficult.values.firstWhere(
                               (difficult) => difficult.index == value.toInt(),

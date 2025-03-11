@@ -4,13 +4,13 @@ import 'dart:math';
 // Flutter imports:
 import 'package:adivina_numero/src/features/home/data/enums/difficult.dart';
 import 'package:adivina_numero/src/features/home/data/enums/number_color.dart';
-import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:adivina_numero/src/core/app/flutter_cout.dart';
 import 'package:adivina_numero/src/features/home/data/models/secret_number_model.dart';
+import 'package:get/get.dart';
 
-final class HomeProvider extends ChangeNotifier {
+final class HomeProvider extends GetxController {
   // core
   final random = Random();
   final minors = <int>[];
@@ -39,7 +39,7 @@ final class HomeProvider extends ChangeNotifier {
 
     minors.clear();
     olders.clear();
-    notifyListeners();
+    update(['tries', 'minors', 'olders']);
 
     Cout.info([
       difficult,
@@ -53,34 +53,39 @@ final class HomeProvider extends ChangeNotifier {
     this.difficult = difficult;
 
     clear();
-    notifyListeners();
+    update(['selector']);
   }
 
   /// Realiza el intento de adivinar el número ingresado.
   /// - [number] número para comparar con el número secreto.
   void tryNumber(int number) {
+    final listeners = <String>[];
     tries--;
 
     // si adivina el número
     if (number == secretNumber) {
       historic.add(SecretNumberModel(secretNumber, NumberColor.green));
       clear();
+      listeners.add('historic');
     }
     // si pierde por intentos
     else if (tries == 0) {
       historic.add(SecretNumberModel(secretNumber, NumberColor.red));
       clear();
+      listeners.add('historic');
     }
     // si el numero es menor que el secreto
     else if (number < secretNumber) {
       olders.add(number);
+      listeners.addAll(['tries', 'olders']);
     }
     // si el numero es mayor que el secreto
     else {
       minors.add(number);
+      listeners.addAll(['tries', 'minors']);
     }
 
-    notifyListeners();
+    update(listeners);
   }
 
   /// Genera un número secreto según la dificultad.
